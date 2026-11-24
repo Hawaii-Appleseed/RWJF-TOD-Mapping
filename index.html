@@ -15,6 +15,7 @@
   --water: #c6dbe0; --land: #e7eae4; --street: #ffffff; --street-casing: #c9d0ca; --street-label: #5c6862;
   --district: rgba(12, 107, 95, 0.09); --district-line: #0c6b5f; --rail: #2b3135; --marker-ring: #ffffff;
   --ring: #3d474e; --condo: #5d6a74;
+  --p-new: #1f5fbf; --p-add: #2f8a3a; --p-demo: #c2372b;
   --seq-1: #ebbdd3; --seq-2: #d27ea8; --seq-3: #a9467d; --seq-4: #6e1e50;
   --cat-1: #2b6cb0; --cat-2: #d2741c; --cat-3: #2e8b57; --cat-4: #8b908d;
   --shadow: 0 2px 10px rgba(24, 32, 28, 0.18);
@@ -28,6 +29,7 @@
     --water: #0e1d23; --land: #1d2421; --street: #36413c; --street-casing: #131917; --street-label: #9aa59f;
     --district: rgba(79, 195, 174, 0.1); --district-line: #4fc3ae; --rail: #d3d8d5; --marker-ring: #111614;
     --ring: #c3cbc7; --condo: #a6b2bb;
+    --p-new: #74a7f2; --p-add: #6cc77a; --p-demo: #f2796b;
     --seq-1: #6b3357; --seq-2: #a3497f; --seq-3: #d679ab; --seq-4: #f6b9d7;
     --cat-1: #6fa8ea; --cat-2: #f0a04b; --cat-3: #5cc28a; --cat-4: #98a19c;
     --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -40,6 +42,7 @@
   --water: #0e1d23; --land: #1d2421; --street: #36413c; --street-casing: #131917; --street-label: #9aa59f;
   --district: rgba(79, 195, 174, 0.1); --district-line: #4fc3ae; --rail: #d3d8d5; --marker-ring: #111614;
   --ring: #c3cbc7; --condo: #a6b2bb;
+    --p-new: #74a7f2; --p-add: #6cc77a; --p-demo: #f2796b;
   --seq-1: #6b3357; --seq-2: #a3497f; --seq-3: #d679ab; --seq-4: #f6b9d7;
   --cat-1: #6fa8ea; --cat-2: #f0a04b; --cat-3: #5cc28a; --cat-4: #98a19c;
   --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -108,6 +111,20 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
 .about p { margin: 6px 0; }
 .about a { color: var(--accent); }
 
+.permit-rows { display: grid; gap: 6px; }
+.permit-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.permit-row .toggle { min-width: 0; }
+.permit-row .n { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.permit-row a, .source-note a { color: var(--accent); font-size: 12px; }
+.source-note { margin: 6px 0 0; font-size: 12px; color: var(--muted); }
+.pm svg, .key-sym { display: block; overflow: visible; flex: none; }
+.sym-new { fill: var(--p-new); stroke: var(--marker-ring); stroke-width: 1.5; }
+.sym-add { fill: var(--p-add); stroke: var(--marker-ring); stroke-width: 1.5; stroke-linejoin: round; }
+.sym-demo { fill: none; stroke: var(--p-demo); stroke-width: 2.5; stroke-linecap: round; }
+.sym-halo { fill: none; stroke: var(--marker-ring); stroke-width: 5; stroke-linecap: round; }
+.pm-dot { border-radius: 50%; background: var(--street-label); opacity: 0.6; box-shadow: 0 0 0 1px var(--marker-ring); }
+.key-dot { width: 7px; height: 7px; margin: 0 3px; border-radius: 50%; background: var(--street-label); flex: none; }
+
 /* Map */
 .map-wrap { position: relative; min-width: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 #map { position: absolute; inset: 0; background: var(--water); font-family: var(--font-body); }
@@ -152,7 +169,7 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
 .leaflet-dragging .leaflet-grab, .leaflet-dragging .leaflet-grab .leaflet-interactive { cursor: grabbing; }
 .leaflet-popup-pane, .leaflet-control { cursor: auto; }
 .leaflet-marker-icon, .leaflet-image-layer, .leaflet-pane > svg path, .leaflet-tile-container { pointer-events: none; }
-.leaflet-pane > svg path.leaflet-interactive { pointer-events: auto; }
+.leaflet-pane > svg path.leaflet-interactive, .leaflet-marker-icon.leaflet-interactive { pointer-events: auto; }
 .leaflet-bar { border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; }
 .leaflet-bar a {
   display: block; width: 32px; height: 32px; line-height: 32px; text-align: center; text-decoration: none;
@@ -229,6 +246,18 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
       </div>
     </section>
 
+    <section aria-labelledby="h-permits">
+      <h2 id="h-permits">Building permits, 2014 to June 2025</h2>
+      <div class="permit-rows">
+        <div class="permit-row"><label class="toggle" for="pm-new"><input type="checkbox" id="pm-new" checked><svg class="key-sym" width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><rect class="sym-new" x="-4.5" y="-4.5" width="9" height="9" rx="1.5"/></svg>New buildings since the Oct 2017 rezoning</label><span class="n" id="n-new"></span><a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/blob/main/data/permits/new_buildings_2017_2025.csv" target="_blank" rel="noopener">Data</a></div>
+        <div class="permit-row"><label class="toggle" for="pm-add"><input type="checkbox" id="pm-add" checked><svg class="key-sym" width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path class="sym-add" d="M0 -5.5 L6 5 L-6 5 Z"/></svg>Homes added</label><span class="n" id="n-add"></span><a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/blob/main/data/permits/homes_added_2014_2025.csv" target="_blank" rel="noopener">Data</a></div>
+        <div class="permit-row"><label class="toggle" for="pm-demo"><input type="checkbox" id="pm-demo" checked><svg class="key-sym" width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path class="sym-halo" d="M-4 -4 L4 4 M4 -4 L-4 4"/><path class="sym-demo" d="M-4 -4 L4 4 M4 -4 L-4 4"/></svg>Homes demolished</label><span class="n" id="n-demo"></span><a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/blob/main/data/permits/homes_demolished_2014_2025.csv" target="_blank" rel="noopener">Data</a></div>
+        <div class="permit-row"><label class="toggle" for="pm-all"><input type="checkbox" id="pm-all"><span class="key-dot" aria-hidden="true"></span>All permits within ½ mile</label><span class="n" id="n-all"></span><a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/blob/main/data/permits/waipahu_permits_2014_2025.csv" target="_blank" rel="noopener">Data</a></div>
+      </div>
+      <p class="also" id="permit-summary">Loading permits…</p>
+      <p class="source-note">Source: City &amp; County of Honolulu Department of Planning and Permitting building permits, <a href="https://data.honolulu.gov/d/4vab-c87q" target="_blank" rel="noopener">data.honolulu.gov</a>, January 2014 to June 30, 2025. Each permit is placed at the center of its parcel. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/permits" target="_blank" rel="noopener">Data files and method</a>.</p>
+    </section>
+
     <section aria-labelledby="h-zoom">
       <h2 id="h-zoom">Zoom to</h2>
       <div class="seg" id="zoom">
@@ -255,7 +284,7 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
       <p>The area covers both adopted TOD Special Districts (Ord. 2017-054), the 2014 Waipahu Neighborhood TOD Plan area, and anything within ½ mile of either station. The rings mark ¼ and ½ mile in a straight line from each station; the city's TOD planning areas use a ½-mile radius.</p>
       <p>Gray dots are older condo buildings that meet every rule except single ownership. Their units are owned separately, so they are left out of the count, though some units may be rented.</p>
       <p>These are candidates. Rents and building condition have not been checked. Owner type comes from the owner's name on the tax roll, and "Company or LLC" includes family holding companies. Owner names are not shown. Building records date from about 2013; ownership and assessed values are from the 2026 tax roll.</p>
-      <p>Sources: City &amp; County of Honolulu cadastral tables, TOD Plan and TOD Special District boundaries, and address points; State of Hawaiʻi parcel and road layers; HART rail stations and guideway; HUD subsidized housing data. Compiled November 2026.</p>
+      <p>Sources: City &amp; County of Honolulu cadastral tables, TOD Plan and TOD Special District boundaries, address points, and Department of Planning and Permitting building permits; State of Hawaiʻi parcel and road layers; HART rail stations and guideway; HUD subsidized housing data. Compiled November 2026.</p>
     </section>
   </aside>
 
@@ -568,6 +597,112 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
   fitAll();
   zoomClass();
   new ResizeObserver(() => map.invalidateSize()).observe(mapEl);
+
+  // Building permits: the report's lists, read from the same CSVs published in data/permits/
+  function parseCsv(text) {
+    const rows = [];
+    let row = [], field = "", quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (quoted) {
+        if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else quoted = false; }
+        else field += c;
+      } else if (c === '"') quoted = true;
+      else if (c === ",") { row.push(field); field = ""; }
+      else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(field); rows.push(row); row = []; field = "";
+      } else field += c;
+    }
+    if (field || row.length) { row.push(field); rows.push(row); }
+    const [head, ...body] = rows.filter(r => r.length > 1 || r[0]);
+    return body.map(r => Object.fromEntries(head.map((h, i) => [h, r[i] ?? ""])));
+  }
+  const pmIcon = (svg, w, h) => L.divIcon({ className: "pm", html: svg, iconSize: [w, h], iconAnchor: [w / 2, h / 2] });
+  const dollars = v => Number(v) ? "$" + Number(v).toLocaleString("en-US") : "Not recorded";
+  const PERMITS = {
+    new: {
+      file: "new_buildings_2017_2025.csv", title: "New building", keep: () => true, z: 600,
+      icon: pmIcon('<svg width="12" height="12" viewBox="-6 -6 12 12"><rect class="sym-new" x="-4.5" y="-4.5" width="9" height="9" rx="1.5"/></svg>', 12, 12),
+      rows: r => `<dt>Homes added</dt><dd>${esc(r["Housing units added"])}</dd>`,
+      flag: r => r["On Farrington Highway"] === "Yes" ? "On Farrington Highway" : "",
+    },
+    add: {
+      file: "homes_added_2014_2025.csv", title: "Homes added", keep: r => r["Likely a home"] === "Yes", z: 500,
+      icon: pmIcon('<svg width="14" height="13" viewBox="-7 -6.5 14 13"><path class="sym-add" d="M0 -5.5 L6 5 L-6 5 Z"/></svg>', 14, 13),
+      rows: r => `<dt>Work</dt><dd>${esc(r["Type of work"])}</dd><dt>Homes added</dt><dd>${esc(r["Housing units added (as recorded)"])}</dd>`,
+      flag: r => r["On land rezoned in 2017"] === "Yes" ? "On land rezoned in 2017" : "",
+    },
+    demo: {
+      file: "homes_demolished_2014_2025.csv", title: "Homes demolished", keep: r => r["Counted as a home demolished"] === "Yes", z: 550,
+      icon: pmIcon('<svg width="12" height="12" viewBox="-6 -6 12 12"><path class="sym-halo" d="M-4 -4 L4 4 M4 -4 L-4 4"/><path class="sym-demo" d="M-4 -4 L4 4 M4 -4 L-4 4"/></svg>', 12, 12),
+      rows: r => `<dt>Homes removed</dt><dd>${esc(r["Housing units demolished (as recorded)"])}</dd><dt>Status</dt><dd>${esc(r["Permit status"])}</dd>`,
+      flag: () => "",
+    },
+    all: {
+      file: "waipahu_permits_2014_2025.csv", title: "Permit", keep: () => true, z: -1000,
+      icon: L.divIcon({ className: "pm-dot", iconSize: [6, 6], iconAnchor: [3, 3] }),
+      rows: r => `<dt>Work</dt><dd>${esc(r["Type of work"])}</dd><dt>Value</dt><dd>${dollars(r["Estimated value of work ($)"])}</dd>`
+        + (Number(r["Housing units added (as recorded)"]) ? `<dt>Homes added</dt><dd>${esc(r["Housing units added (as recorded)"])}</dd>` : "")
+        + (Number(r["Housing units removed (as recorded)"]) ? `<dt>Homes removed</dt><dd>${esc(r["Housing units removed (as recorded)"])}</dd>` : "")
+        + `<dt>Status</dt><dd>${esc(r["Permit status"])}</dd>`,
+      flag: () => "",
+    },
+  };
+  const permitPopup = (p, r) => `
+    <div class="pop">
+      <h4>${esc(r["Address"] || "Address not listed")}</h4>
+      <div class="tmk">${esc(p.title)} · permit ${esc(r["Permit number"])} · ${esc(r["Issue date"])}</div>
+      <dl>
+        <dt>Use</dt><dd>${esc(r["Use (as recorded)"] || "Not recorded")}</dd>
+        ${p.rows(r)}
+        <dt>Station</dt><dd>${esc(r["Nearest station"])}, ${Number(r["Distance to station (miles)"]).toFixed(2)} mi</dd>
+      </dl>
+      ${p.flag(r) ? `<div class="flag">${esc(p.flag(r))}</div>` : ""}
+      ${r["City record"] ? `<p style="margin:8px 0 0"><a href="${esc(r["City record"])}" target="_blank" rel="noopener">City permit record ↗</a></p>` : ""}
+    </div>`;
+  const permitLayers = {};
+  for (const kind of Object.keys(PERMITS)) {
+    document.getElementById("pm-" + kind).addEventListener("change", e => {
+      const g = permitLayers[kind];
+      if (g) e.target.checked ? g.addTo(map) : g.remove();
+    });
+  }
+  (async () => {
+    const summary = document.getElementById("permit-summary");
+    try {
+      const sets = {};
+      await Promise.all(Object.entries(PERMITS).map(async ([kind, p]) => {
+        const res = await fetch("data/permits/" + p.file);
+        if (!res.ok) throw new Error(p.file + ": HTTP " + res.status);
+        sets[kind] = parseCsv((await res.text()).replace(/^﻿/, "")).filter(p.keep);
+      }));
+      for (const [kind, rows] of Object.entries(sets)) {
+        const p = PERMITS[kind];
+        const group = L.layerGroup();
+        for (const r of rows) {
+          const lat = Number(r["Latitude"]), lon = Number(r["Longitude"]);
+          if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+          L.marker([lat, lon], { icon: p.icon, keyboard: false, zIndexOffset: p.z, title: r["Address"] })
+            .bindPopup(permitPopup(p, r), { maxWidth: 300, autoPanPadding: [24, 24] }).addTo(group);
+        }
+        permitLayers[kind] = group;
+        if (document.getElementById("pm-" + kind).checked) group.addTo(map);
+      }
+      const units = (rows, col) => rows.reduce((a, r) => a + (Number(r[col]) || 0), 0);
+      const added = units(sets.add, "Housing units added (as recorded)");
+      const addedSince = units(sets.add.filter(r => r["Issue date"] >= "2017-10-26"), "Housing units added (as recorded)");
+      const removed = units(sets.demo, "Housing units demolished (as recorded)");
+      document.getElementById("n-new").textContent = sets.new.length;
+      document.getElementById("n-add").textContent = `${added} homes`;
+      document.getElementById("n-demo").textContent = `${removed} homes`;
+      document.getElementById("n-all").textContent = sets.all.length.toLocaleString("en-US");
+      summary.textContent = `Within ½ mile of the stations, permits from January 2014 to June 2025 added ${added} homes and demolished ${removed}. `
+        + `Since the October 2017 rezoning, ${sets.new.length} new buildings were permitted and ${addedSince} homes added.`;
+    } catch (err) {
+      summary.textContent = "The permit data did not load. Reload the page to try again.";
+    }
+  })();
 })();
 </script>
 </body>
