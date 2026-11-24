@@ -1,8 +1,13 @@
-# rebuild scratch folders; the published permit data in data/permits/ is kept
+# rebuild scratch folders; the published data folders are kept
 data/*
 !data/permits/
+!data/services/
+!data/station_area/
+!data/parcels/
 out/
 map/
 *.csv
 !data/permits/*.csv
+!data/services/*.csv
+!data/station_area/*.csv
 __pycache__/

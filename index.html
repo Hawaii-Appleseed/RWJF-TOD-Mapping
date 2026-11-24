@@ -16,6 +16,8 @@
   --district: rgba(12, 107, 95, 0.09); --district-line: #0c6b5f; --rail: #2b3135; --marker-ring: #ffffff;
   --ring: #3d474e; --condo: #5d6a74;
   --p-new: #1f5fbf; --p-add: #2f8a3a; --p-demo: #c2372b;
+  --s-food: #b86e00; --s-health: #0b7fa6; --s-school: #7b4fc4; --s-park: #4f7d2a;
+  --lot-1: #efe9dd; --lot-2: #ddd1bb; --lot-3: #c4b195; --lot-4: #a28d6c; --lot-5: #75634a; --lot-line: #ffffff;
   --seq-1: #ebbdd3; --seq-2: #d27ea8; --seq-3: #a9467d; --seq-4: #6e1e50;
   --cat-1: #2b6cb0; --cat-2: #d2741c; --cat-3: #2e8b57; --cat-4: #8b908d;
   --shadow: 0 2px 10px rgba(24, 32, 28, 0.18);
@@ -30,6 +32,8 @@
     --district: rgba(79, 195, 174, 0.1); --district-line: #4fc3ae; --rail: #d3d8d5; --marker-ring: #111614;
     --ring: #c3cbc7; --condo: #a6b2bb;
     --p-new: #74a7f2; --p-add: #6cc77a; --p-demo: #f2796b;
+    --s-food: #f0a640; --s-health: #4fc0e8; --s-school: #b394f0; --s-park: #9ccc65;
+    --lot-1: #27241f; --lot-2: #3a342a; --lot-3: #554a39; --lot-4: #7a6a51; --lot-5: #a6916f; --lot-line: #111614;
     --seq-1: #6b3357; --seq-2: #a3497f; --seq-3: #d679ab; --seq-4: #f6b9d7;
     --cat-1: #6fa8ea; --cat-2: #f0a04b; --cat-3: #5cc28a; --cat-4: #98a19c;
     --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -43,6 +47,8 @@
   --district: rgba(79, 195, 174, 0.1); --district-line: #4fc3ae; --rail: #d3d8d5; --marker-ring: #111614;
   --ring: #c3cbc7; --condo: #a6b2bb;
     --p-new: #74a7f2; --p-add: #6cc77a; --p-demo: #f2796b;
+    --s-food: #f0a640; --s-health: #4fc0e8; --s-school: #b394f0; --s-park: #9ccc65;
+    --lot-1: #27241f; --lot-2: #3a342a; --lot-3: #554a39; --lot-4: #7a6a51; --lot-5: #a6916f; --lot-line: #111614;
   --seq-1: #6b3357; --seq-2: #a3497f; --seq-3: #d679ab; --seq-4: #f6b9d7;
   --cat-1: #6fa8ea; --cat-2: #f0a04b; --cat-3: #5cc28a; --cat-4: #98a19c;
   --shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -124,6 +130,18 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
 .sym-halo { fill: none; stroke: var(--marker-ring); stroke-width: 5; stroke-linecap: round; }
 .pm-dot { border-radius: 50%; background: var(--street-label); opacity: 0.6; box-shadow: 0 0 0 1px var(--marker-ring); }
 .key-dot { width: 7px; height: 7px; margin: 0 3px; border-radius: 50%; background: var(--street-label); flex: none; }
+
+.tbl-wrap { overflow-x: auto; margin-top: 10px; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.tbl th, .tbl td { padding: 4px 6px; border-bottom: 1px solid var(--line); text-align: right; vertical-align: top; }
+.tbl th:first-child, .tbl td:first-child { text-align: left; padding-left: 0; }
+.tbl thead th { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.03em; }
+.tbl td.zero { color: var(--p-demo); font-weight: 600; }
+.tbl .unc { color: var(--muted); font-weight: 400; }
+.ring-sym { width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--ring-color); background: var(--panel); flex: none; margin: 0 1px; }
+.sub-h { margin: 18px 0 2px; font-size: 13px; font-weight: 600; }
+
+.legend i.sq { border-radius: 2px; }
 
 /* Map */
 .map-wrap { position: relative; min-width: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
@@ -214,12 +232,14 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
 <div class="app">
   <aside class="panel" aria-label="About this map">
     <header>
-      <p class="eyebrow">Waipahu rail station areas · Oʻahu</p>
-      <h1>Potential naturally occurring affordable housing near Waipahu rail</h1>
-      <p class="lede">Older, privately owned apartment buildings with no public subsidy around the Hōʻaeʻae (West Loch) and Pouhala (Waipahu Transit Center) rail stations. TOD zoning allows denser redevelopment here, which can raise the chance these buildings are sold or replaced.</p>
+      <p class="eyebrow">RWJF TOD Mapping · Waipahu, Oʻahu</p>
+      <h1>Waipahu TOD neighborhood assessment</h1>
+      <p class="lede">Housing, new construction, everyday services and the people who live around the Hōʻaeʻae (West Loch) and Pouhala (Waipahu Transit Center) rail stations, rezoned for transit-oriented development in 2017.</p>
     </header>
 
-    <section aria-label="Summary">
+    <section aria-labelledby="h-noah">
+      <h2 id="h-noah">Potential naturally occurring affordable housing</h2>
+      <p class="also" style="margin: 0 0 10px">Older, privately owned apartment buildings with no public subsidy. TOD zoning allows denser redevelopment here, which can raise the chance they are sold or replaced.</p>
       <div class="stats">
         <div class="stat"><b id="s-bldg">78</b><span>buildings</span></div>
         <div class="stat"><b id="s-units">740</b><span>homes</span></div>
@@ -256,6 +276,38 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
       </div>
       <p class="also" id="permit-summary">Loading permits…</p>
       <p class="source-note">Source: City &amp; County of Honolulu Department of Planning and Permitting building permits, <a href="https://data.honolulu.gov/d/4vab-c87q" target="_blank" rel="noopener">data.honolulu.gov</a>, January 2014 to June 30, 2025. Each permit is placed at the center of its parcel. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/permits" target="_blank" rel="noopener">Data files and method</a>.</p>
+    </section>
+
+    <section aria-labelledby="h-parcels">
+      <h2 id="h-parcels">Parcels and lot sizes</h2>
+      <label class="toggle" for="show-parcels"><input type="checkbox" id="show-parcels" checked>Shade parcels by lot size</label>
+      <ul class="legend" id="lot-legend"></ul>
+      <p class="also" id="lot-note"></p>
+      <p class="source-note">Parcels within ½ mile of either station or inside the TOD Special District or TOD Plan area; click one for its lot size and zoning. Lot size is the recorded area, or the GIS area where none is recorded. Sources: State of Hawaiʻi Statewide GIS parcels; City zoning map, September 2023. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/parcels" target="_blank" rel="noopener">Data file and method</a>.</p>
+    </section>
+
+    <section aria-labelledby="h-services">
+      <h2 id="h-services">Everyday services</h2>
+      <div class="permit-rows">
+        <div class="permit-row"><label class="toggle" for="sv-food"><input type="checkbox" id="sv-food" checked><span class="ring-sym" style="--ring-color: var(--s-food)" aria-hidden="true"></span>Food stores (SNAP retailers)</label><span class="n" id="ns-food"></span></div>
+        <div class="permit-row"><label class="toggle" for="sv-health"><input type="checkbox" id="sv-health" checked><span class="ring-sym" style="--ring-color: var(--s-health)" aria-hidden="true"></span>Health care</label><span class="n" id="ns-health"></span></div>
+        <div class="permit-row"><label class="toggle" for="sv-school"><input type="checkbox" id="sv-school" checked><span class="ring-sym" style="--ring-color: var(--s-school)" aria-hidden="true"></span>Schools and child care</label><span class="n" id="ns-school"></span></div>
+        <div class="permit-row"><label class="toggle" for="sv-park"><input type="checkbox" id="sv-park" checked><span class="ring-sym" style="--ring-color: var(--s-park)" aria-hidden="true"></span>Parks and libraries</label><span class="n" id="ns-park"></span></div>
+      </div>
+      <p class="source-note">Dashed rings have closed. Click a ring for its walking distance to each station.</p>
+      <div class="tbl-wrap"><table class="tbl" id="services-table"><thead><tr><th>Within a ½-mile walk</th><th>Hōʻaeʻae</th><th>Pouhala</th></tr></thead><tbody></tbody></table></div>
+      <p class="source-note">Red: none within a ½-mile walk; hover a count to see the nearest. +n: more that could not be confirmed open.</p>
+      <p class="also" id="snap-note"></p>
+      <p class="source-note">Sources: USDA SNAP retailers, CMS NPI Registry, Hawaiʻi Department of Health, and State GIS layers for schools, child care, parks and libraries. Walking distances follow City streets from each station. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/services" target="_blank" rel="noopener">Data files and method</a>.</p>
+    </section>
+
+    <section aria-labelledby="h-profile">
+      <h2 id="h-profile">Who lives near the stations</h2>
+      <div class="tbl-wrap"><table class="tbl" id="acs-table"><thead><tr><th></th><th>Hōʻaeʻae</th><th>Pouhala</th><th>County</th></tr></thead><tbody></tbody></table></div>
+      <p class="sub-h">Walking and zoning</p>
+      <div class="tbl-wrap"><table class="tbl" id="walk-table"><thead><tr><th></th><th>Hōʻaeʻae</th><th>Pouhala</th><th>County</th></tr></thead><tbody></tbody></table></div>
+      <p class="also" id="zoning-note"></p>
+      <p class="source-note">Census: American Community Survey 2020–2024 5-year estimates for the tracts around each station; hover a value for its margin of error. Walkability: EPA National Walkability Index. Zoning: City and County of Honolulu. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/station_area" target="_blank" rel="noopener">Data files and method</a>.</p>
     </section>
 
     <section aria-labelledby="h-zoom">
@@ -355,7 +407,9 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
   map.fitBounds([[y0, x0], [y1, x1]], { animate: false }); // layers can only be styled once the map has a view
   map.setMaxBounds([[y0 - 0.02, x0 - 0.03], [y1 + 0.02, x1 + 0.03]]);
 
-  const land = L.geoJSON(data.land, { interactive: false }).addTo(map);
+  map.createPane("base").style.zIndex = 300;
+  map.createPane("parcels").style.zIndex = 350;
+  const land = L.geoJSON(data.land, { interactive: false, pane: "base" }).addTo(map);
   const districts = L.geoJSON(data.districts, { interactive: false }).addTo(map);
   const casing = L.geoJSON(data.streets, { interactive: false }).addTo(map);
   const streets = L.geoJSON(data.streets, { interactive: false }).addTo(map);
@@ -701,6 +755,225 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
         + `Since the October 2017 rezoning, ${sets.new.length} new buildings were permitted and ${addedSince} homes added.`;
     } catch (err) {
       summary.textContent = "The permit data did not load. Reload the page to try again.";
+    }
+  })();
+
+  // Everyday services and the station-area profile, read from data/services/ and data/station_area/
+  const fetchCsv = async path => {
+    const res = await fetch(path);
+    if (!res.ok) throw new Error(path + ": HTTP " + res.status);
+    return parseCsv((await res.text()).replace(/^﻿/, ""));
+  };
+  const keyOf = s => String(s || "").normalize("NFKD").replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+  const SERVICE_GROUPS = {
+    food: { token: "--s-food", cats: ["Supermarket", "Grocery, produce, meat or fish market", "Convenience store"] },
+    health: { token: "--s-health", cats: ["Pharmacy", "Clinic or doctor's office", "Hospital emergency department", "Dialysis center"] },
+    school: { token: "--s-school", cats: ["Child care or preschool", "Public or charter school", "Private school"] },
+    park: { token: "--s-park", cats: ["Park", "Public library"] },
+  };
+  const groupOf = cat => Object.keys(SERVICE_GROUPS).find(g => SERVICE_GROUPS[g].cats.includes(cat)) || "park";
+  const walkMi = v => v === "" || !Number.isFinite(Number(v)) ? "n/a" : Number(v).toFixed(2) + " mi";
+  const serviceLayers = {};
+  const serviceDots = [];
+  function restyleServices() {
+    for (const { dot, group, closed } of serviceDots) {
+      dot.setStyle({ color: tok(SERVICE_GROUPS[group].token), fillColor: tok("--panel"), fillOpacity: 1, weight: 2.5, dashArray: closed ? "2 2.5" : null });
+    }
+  }
+  const servicePopup = r => {
+    const extra = [
+      r["Store type"] && `<dt>Store type</dt><dd>${esc(r["Store type"])}</dd>`,
+      Number(r["Practices"]) > 1 && `<dt>Practices</dt><dd>${esc(r["Practices"])} at this address</dd>`,
+      r["Grades"] && `<dt>Grades</dt><dd>${esc(r["Grades"])}</dd>`,
+      Number(r["Acres"]) && `<dt>Acres</dt><dd>${Number(r["Acres"]).toFixed(1)}</dd>`,
+    ].filter(Boolean).join("");
+    const source = /^https?:/.test(r["Source"]) ? `<a href="${esc(r["Source"])}" target="_blank" rel="noopener">Website ↗</a>` : esc(r["Source"]);
+    return `<div class="pop">
+      <h4>${esc(r["Name"])}</h4>
+      <div class="tmk">${esc(r["Category"])}${r["Status"] && r["Status"] !== "open" ? " · " + esc(r["Status"]) : ""}</div>
+      <dl>
+        <dt>Address</dt><dd>${esc(r["Address"] || "Not listed")}</dd>
+        ${extra}
+        <dt>Walk</dt><dd>Hōʻaeʻae ${walkMi(r["Hōʻaeʻae walk mi"])}<br>Pouhala ${walkMi(r["Pouhala walk mi"])}</dd>
+        <dt>Source</dt><dd>${source}</dd>
+      </dl>
+    </div>`;
+  };
+  for (const g of Object.keys(SERVICE_GROUPS)) {
+    document.getElementById("sv-" + g).addEventListener("change", e => {
+      const layer = serviceLayers[g];
+      if (layer) e.target.checked ? layer.addTo(map) : layer.remove();
+    });
+  }
+  map.createPane("services").style.zIndex = 390; // under the housing dots and parcels
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyleServices);
+  new MutationObserver(restyleServices).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  (async () => {
+    try {
+      const [services, walk, snap] = await Promise.all([
+        fetchCsv("data/services/station_services.csv"),
+        fetchCsv("data/services/services_within_half_mile_walk.csv"),
+        fetchCsv("data/services/snap_retailer_changes.csv"),
+      ]);
+      const counts = {};
+      for (const g of Object.keys(SERVICE_GROUPS)) serviceLayers[g] = L.layerGroup();
+      for (const r of services) {
+        const lat = Number(r["Latitude"]), lon = Number(r["Longitude"]);
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+        const group = groupOf(r["Category"]);
+        const dot = L.circleMarker([lat, lon], { pane: "services", radius: 5 })
+          .bindPopup(servicePopup(r), { maxWidth: 300, autoPanPadding: [24, 24] });
+        dot.addTo(serviceLayers[group]);
+        serviceDots.push({ dot, group, closed: /^closed/i.test(r["Status"]) });
+        counts[group] = (counts[group] || 0) + 1;
+      }
+      for (const g of Object.keys(SERVICE_GROUPS)) {
+        document.getElementById("ns-" + g).textContent = counts[g] || 0;
+        if (document.getElementById("sv-" + g).checked) serviceLayers[g].addTo(map);
+      }
+      restyleServices(); // after the rings are on the map, so they have positions to restyle
+
+      // Within a half-mile walk, by category and station
+      const prefixes = Object.keys(walk[0] || {}).filter(k => k.endsWith(": within half-mile walk")).map(k => k.replace(": within half-mile walk", ""));
+      const tbody = document.querySelector("#services-table tbody");
+      for (const r of walk) {
+        const cell = p => {
+          const n = Number(r[`${p}: within half-mile walk`]) || 0;
+          const unconfirmed = Number(r[`${p}: unconfirmed within half-mile walk`]) || 0;
+          const nearest = r[`${p}: nearest`];
+          const title = nearest ? `Nearest: ${nearest}, ${walkMi(r[`${p}: nearest walk mi`])} walk` : "";
+          return `<td class="${n ? "" : "zero"}" title="${esc(title)}">${n}${unconfirmed ? `<span class="unc"> +${unconfirmed}</span>` : ""}</td>`;
+        };
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${esc(r["Category"])}</td>` + prefixes.map(cell).join("");
+        tbody.appendChild(tr);
+      }
+      const stopped = snap.filter(r => /^stopped/i.test(r["Change"])).length;
+      const started = snap.filter(r => /^started/i.test(r["Change"])).length;
+      document.getElementById("snap-note").textContent =
+        `Since July 2023, ${stopped} stores near the stations stopped accepting SNAP and ${started} started.`;
+    } catch (err) {
+      document.getElementById("snap-note").textContent = "The services data did not load. Reload the page to try again.";
+    }
+  })();
+
+  (async () => {
+    try {
+      const [acs, walkability, reach, zoning] = await Promise.all([
+        fetchCsv("data/station_area/acs_profile_2020_2024.csv"),
+        fetchCsv("data/station_area/walkability.csv"),
+        fetchCsv("data/station_area/street_reach.csv"),
+        fetchCsv("data/station_area/zoning_summary.csv"),
+      ]);
+      const AREAS = ["Hōʻaeʻae (West Loch)", "Pouhala (Waipahu TC)", "Honolulu County"].map(keyOf);
+      const ROWS = [
+        ["Population", "Population"],
+        ["Renter households", "Households renting"],
+        ["Households with no vehicle", "Households with no vehicle"],
+        ["People below 200% of poverty level", "Below 200% of poverty level"],
+        ["Renters paying 30%+ of income on rent", "Renters paying 30%+ of income"],
+        ["Age 65 and older", "Age 65 and older"],
+        ["People with a disability", "People with a disability"],
+        ["Workers: public transportation", "Workers taking transit"],
+        ["Workers: walked or biked", "Workers walking or biking"],
+        ["Mean travel time to work (minutes)", "Average commute"],
+        ["Commuters traveling 45+ minutes", "Commutes of 45+ minutes"],
+        ["Age 5+: speak English less than very well", "Speak English less than very well"],
+      ];
+      const byKey = {};
+      for (const r of acs) byKey[keyOf(r["Area"]) + "|" + r["Indicator"]] = r;
+      const fmt = r => {
+        const v = Number(r["Value"]);
+        if (r["Unit"] === "share") return Math.round(v * 100) + "%";
+        if (r["Unit"] === "minutes") return Math.round(v) + " min";
+        return Math.round(v).toLocaleString("en-US");
+      };
+      const acsBody = document.querySelector("#acs-table tbody");
+      for (const [indicator, label] of ROWS) {
+        const cells = AREAS.map(a => byKey[a + "|" + indicator]);
+        if (cells.some(c => !c)) continue;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${esc(label)}</td>` + cells.map(c => `<td title="± ${esc(c["Unit"] === "share" ? Math.round(Number(c["Margin of error (90%)"]) * 1000) / 10 + " points" : Math.round(Number(c["Margin of error (90%)"])).toLocaleString("en-US"))} (90% margin of error)">${fmt(c)}</td>`).join("");
+        acsBody.appendChild(tr);
+      }
+
+      const walkFor = name => walkability.find(r => keyOf(r["Area"]).startsWith(keyOf(name)) && /population/i.test(r["Area"]));
+      const reachFor = name => reach.find(r => keyOf(r["Station"]).startsWith(keyOf(name)));
+      const share = r => r ? Math.round(Number(Object.values(r)[1]) * 100) + "%" : "–";
+      const walkBody = document.querySelector("#walk-table tbody");
+      const w = ["Hōʻaeʻae", "Pouhala", "Honolulu County"].map(walkFor);
+      walkBody.innerHTML =
+        `<tr><td>Walkability index (1–20)</td>${w.map(r => `<td>${r ? Number(r["EPA walkability index (1-20)"]).toFixed(1) : "–"}</td>`).join("")}</tr>`
+        + `<tr><td>Streets reachable in a ½-mile walk</td><td>${share(reachFor("Hōʻaeʻae"))}</td><td>${share(reachFor("Pouhala"))}</td><td>–</td></tr>`;
+
+      const sf = zoning.find(r => /share/i.test(r["Measure"]));
+      if (sf) {
+        const col = re => Math.round(Number(sf[Object.keys(sf).find(k => re.test(k))]));
+        document.getElementById("zoning-note").textContent =
+          `Zoning: ${col(/^Within a half-mile/i)}% of zoned land within ½ mile of the stations is zoned single-family, `
+          + `${col(/^TOD special district/i)}% inside the TOD Special District and ${col(/outside the special district/i)}% outside it.`;
+      }
+    } catch (err) {
+      document.getElementById("zoning-note").textContent = "The station-area data did not load. Reload the page to try again.";
+    }
+  })();
+
+  // Parcels shaded by lot size, read from data/parcels/station_area_parcels.geojson
+  const LOTS = [
+    { label: "Under 5,000 sq ft", max: 5000, token: "--lot-1" },
+    { label: "5,000–9,999 sq ft", max: 10000, token: "--lot-2" },
+    { label: "10,000–19,999 sq ft", max: 20000, token: "--lot-3" },
+    { label: "20,000 sq ft to 1 acre", max: 43560, token: "--lot-4" },
+    { label: "1 acre or more", max: Infinity, token: "--lot-5" },
+  ];
+  const lotClass = sqft => LOTS.find(c => sqft < c.max);
+  let lotLayer = null;
+  const lotStyle = f => ({ fillColor: tok(lotClass(f.properties.lot_sqft).token), fillOpacity: 0.85,
+                           color: tok("--lot-line"), weight: 0.8, opacity: 1 });
+  const restyleLots = () => {
+    if (lotLayer) lotLayer.setStyle(lotStyle);
+    const legend = document.getElementById("lot-legend");
+    if (!lotLayer) return;
+    const feats = lotLayer.toGeoJSON().features;
+    legend.innerHTML = LOTS.map(c => {
+      const n = feats.filter(f => lotClass(f.properties.lot_sqft) === c).length;
+      return `<li><i class="sq" style="background:${tok(c.token)}"></i>${esc(c.label)}<span class="n">${n.toLocaleString("en-US")}</span></li>`;
+    }).join("");
+  };
+  const lotPopup = p => `
+    <div class="pop">
+      <h4>TMK ${fmtTmk(p.tmk)}</h4>
+      <div class="tmk">Lot ${Number(p.lot_sqft).toLocaleString("en-US")} sq ft (${(p.lot_sqft / 43560).toFixed(2)} acres)${p.area_basis === "GIS" ? ", GIS estimate" : ""}</div>
+      <dl>
+        <dt>Zoning</dt><dd>${esc(p.zoning || "Not mapped")}</dd>
+        <dt>Station</dt><dd>${Number(p.miles_to_station).toFixed(2)} mi to the nearer station</dd>
+        ${p.tod_special_district ? "<dt>District</dt><dd>TOD Special District</dd>" : ""}
+      </dl>
+      <p style="margin:8px 0 0"><a href="https://qpublic.schneidercorp.com/Application.aspx?AppID=1045&amp;PageTypeID=4&amp;KeyValue=${esc(p.tmk)}0000" target="_blank" rel="noopener">City property record ↗</a></p>
+    </div>`;
+  document.getElementById("show-parcels").addEventListener("change", e => {
+    if (lotLayer) e.target.checked ? lotLayer.addTo(map) : lotLayer.remove();
+  });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyleLots);
+  new MutationObserver(restyleLots).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  (async () => {
+    const note = document.getElementById("lot-note");
+    try {
+      const res = await fetch("data/parcels/station_area_parcels.geojson");
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const geo = await res.json();
+      lotLayer = L.geoJSON(geo, { pane: "parcels", style: lotStyle,
+        onEachFeature: (f, layer) => layer.bindPopup(lotPopup(f.properties), { maxWidth: 300, autoPanPadding: [24, 24] }) });
+      if (document.getElementById("show-parcels").checked) lotLayer.addTo(map);
+      restyleLots();
+      const sizes = geo.features.map(f => f.properties.lot_sqft).sort((a, b) => a - b);
+      const sd = geo.features.filter(f => f.properties.tod_special_district);
+      const sdSmall = sd.filter(f => f.properties.lot_sqft < 10000).length;
+      note.textContent = `Median lot: ${sizes[sizes.length >> 1].toLocaleString("en-US")} sq ft across ${sizes.length.toLocaleString("en-US")} parcels. `
+        + `In the TOD Special District, ${sdSmall} of ${sd.length} parcels (${Math.round(sdSmall / sd.length * 100)}%) are under 10,000 sq ft.`;
+    } catch (err) {
+      note.textContent = "The parcel data did not load. Reload the page to try again.";
     }
   })();
 })();
