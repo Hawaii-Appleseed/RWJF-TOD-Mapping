@@ -17,6 +17,8 @@
   --ring: #3d474e; --condo: #5d6a74;
   --p-new: #1f5fbf; --p-add: #2f8a3a; --p-demo: #c2372b;
   --s-food: #b86e00; --s-health: #0b7fa6; --s-school: #7b4fc4; --s-park: #4f7d2a;
+  --z-residential: #fded90; --z-mixed: #cdaff6; --z-apartment: #f3ae67; --z-business: #d47674;
+  --z-industrial: #809bb6; --z-open: #8bdcad; --zone-line: #8a948e;
   --lot-1: #efe9dd; --lot-2: #ddd1bb; --lot-3: #c4b195; --lot-4: #a28d6c; --lot-5: #75634a; --lot-line: #ffffff;
   --seq-1: #ebbdd3; --seq-2: #d27ea8; --seq-3: #a9467d; --seq-4: #6e1e50;
   --cat-1: #2b6cb0; --cat-2: #d2741c; --cat-3: #2e8b57; --cat-4: #8b908d;
@@ -33,6 +35,8 @@
     --ring: #c3cbc7; --condo: #a6b2bb;
     --p-new: #74a7f2; --p-add: #6cc77a; --p-demo: #f2796b;
     --s-food: #f0a640; --s-health: #4fc0e8; --s-school: #b394f0; --s-park: #9ccc65;
+    --z-residential: #554700; --z-mixed: #7f6eb5; --z-apartment: #b47737; --z-business: #96444d;
+    --z-industrial: #1f3550; --z-open: #3a9878; --zone-line: #0b0f0d;
     --lot-1: #27241f; --lot-2: #3a342a; --lot-3: #554a39; --lot-4: #7a6a51; --lot-5: #a6916f; --lot-line: #111614;
     --seq-1: #6b3357; --seq-2: #a3497f; --seq-3: #d679ab; --seq-4: #f6b9d7;
     --cat-1: #6fa8ea; --cat-2: #f0a04b; --cat-3: #5cc28a; --cat-4: #98a19c;
@@ -48,6 +52,8 @@
   --ring: #c3cbc7; --condo: #a6b2bb;
     --p-new: #74a7f2; --p-add: #6cc77a; --p-demo: #f2796b;
     --s-food: #f0a640; --s-health: #4fc0e8; --s-school: #b394f0; --s-park: #9ccc65;
+    --z-residential: #554700; --z-mixed: #7f6eb5; --z-apartment: #b47737; --z-business: #96444d;
+    --z-industrial: #1f3550; --z-open: #3a9878; --zone-line: #0b0f0d;
     --lot-1: #27241f; --lot-2: #3a342a; --lot-3: #554a39; --lot-4: #7a6a51; --lot-5: #a6916f; --lot-line: #111614;
   --seq-1: #6b3357; --seq-2: #a3497f; --seq-3: #d679ab; --seq-4: #f6b9d7;
   --cat-1: #6fa8ea; --cat-2: #f0a04b; --cat-3: #5cc28a; --cat-4: #98a19c;
@@ -142,6 +148,18 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
 .sub-h { margin: 18px 0 2px; font-size: 13px; font-weight: 600; }
 
 .legend i.sq { border-radius: 2px; }
+
+[hidden] { display: none !important; }
+.shade-by { border: 0; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 13px; }
+.shade-by legend { padding: 0; margin: 0 0 6px; width: 100%; color: var(--muted); font-size: 12px; }
+.shade-by label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.shade-by input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+.shade-by input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.legend .codes { color: var(--muted); font: 11px var(--font-mono); }
+.zone-label span { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font: 600 11px/1 var(--font-mono);
+  letter-spacing: 0.02em; color: var(--fg); text-shadow: 0 0 2px var(--panel), 0 0 2px var(--panel), 0 0 4px var(--panel); }
+.leaflet-tooltip { position: absolute; padding: 6px 8px; background: var(--panel); color: var(--fg); border: 1px solid var(--line);
+  border-radius: 6px; box-shadow: var(--shadow); font: 12px/1.4 var(--font-body); white-space: nowrap; pointer-events: none; user-select: none; }
 
 /* Map */
 .map-wrap { position: relative; min-width: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
@@ -279,11 +297,19 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
     </section>
 
     <section aria-labelledby="h-parcels">
-      <h2 id="h-parcels">Parcels and lot sizes</h2>
-      <label class="toggle" for="show-parcels"><input type="checkbox" id="show-parcels" checked>Shade parcels by lot size</label>
-      <ul class="legend" id="lot-legend"></ul>
-      <p class="also" id="lot-note"></p>
-      <p class="source-note">Parcels within ½ mile of either station or inside the TOD Special District or TOD Plan area; click one for its lot size and zoning. Lot size is the recorded area, or the GIS area where none is recorded. Sources: State of Hawaiʻi Statewide GIS parcels; City zoning map, September 2023. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/parcels" target="_blank" rel="noopener">Data file and method</a>.</p>
+      <h2 id="h-parcels">Zoning and lot sizes</h2>
+      <fieldset class="shade-by">
+        <legend>Shade the map by</legend>
+        <label><input type="radio" name="shade" value="zoning" checked>Zoning</label>
+        <label><input type="radio" name="shade" value="lots">Lot size</label>
+        <label><input type="radio" name="shade" value="none">Neither</label>
+      </fieldset>
+      <ul class="legend" id="zone-legend"></ul>
+      <p class="legend-note" id="zone-legend-note">Acres of zoned land within ½ mile of either station. Zone codes are labeled on the map; hover an area for its full name.</p>
+      <ul class="legend" id="lot-legend" hidden></ul>
+      <p class="also" id="zone-note"></p>
+      <p class="also" id="lot-note" hidden></p>
+      <p class="source-note">Zoning: City and County of Honolulu zoning map as of September 2023, from the State of Hawaiʻi Statewide GIS Program. Lot sizes: parcels within ½ mile of either station or inside the TOD Special District or TOD Plan area, using the recorded area, or the GIS area where none is recorded. Hover or click a parcel for its zoning and lot size. <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/zoning" target="_blank" rel="noopener">Zoning data and method</a> · <a href="https://github.com/Hawaii-Appleseed/RWJF-TOD-Mapping/tree/main/data/parcels" target="_blank" rel="noopener">Parcel data and method</a>.</p>
     </section>
 
     <section aria-labelledby="h-services">
@@ -919,7 +945,17 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
     }
   })();
 
-  // Parcels shaded by lot size, read from data/parcels/station_area_parcels.geojson
+  // Zoning districts and parcels. The map is shaded by zoning (data/zoning/zoning_districts.geojson),
+  // by lot size (data/parcels/station_area_parcels.geojson), or by neither.
+  const ZONE_GROUPS = [
+    { key: "residential", label: "Residential", token: "--z-residential" },
+    { key: "mixed", label: "Mixed use", token: "--z-mixed" },
+    { key: "apartment", label: "Apartment", token: "--z-apartment" },
+    { key: "business", label: "Business", token: "--z-business" },
+    { key: "industrial", label: "Industrial", token: "--z-industrial" },
+    { key: "open", label: "Agriculture and preservation", token: "--z-open" },
+  ];
+  const zoneGroup = key => ZONE_GROUPS.find(g => g.key === key) || { label: "Other", token: "--line" };
   const LOTS = [
     { label: "Under 5,000 sq ft", max: 5000, token: "--lot-1" },
     { label: "5,000–9,999 sq ft", max: 10000, token: "--lot-2" },
@@ -928,19 +964,78 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
     { label: "1 acre or more", max: Infinity, token: "--lot-5" },
   ];
   const lotClass = sqft => LOTS.find(c => sqft < c.max);
-  let lotLayer = null;
-  const lotStyle = f => ({ fillColor: tok(lotClass(f.properties.lot_sqft).token), fillOpacity: 0.85,
-                           color: tok("--lot-line"), weight: 0.8, opacity: 1 });
-  const restyleLots = () => {
-    if (lotLayer) lotLayer.setStyle(lotStyle);
-    const legend = document.getElementById("lot-legend");
+  const acresFmt = a => Math.round(a).toLocaleString("en-US");
+  map.createPane("zoning").style.zIndex = 330;
+  const labelPane = map.createPane("zonelabels");
+  labelPane.style.zIndex = 360;
+  labelPane.style.pointerEvents = "none";
+
+  let shade = "zoning";
+  let zoneLayer = null, lotLayer = null;
+  const zoneLabels = L.layerGroup();
+  const labelData = [];
+
+  const zoneStyle = f => ({ fillColor: tok(zoneGroup(f.properties.group).token), fillOpacity: 1,
+                            color: tok("--zone-line"), weight: 1, opacity: 0.8 });
+  // Parcels show their lot-size fill, or just their outlines over the zoning
+  const lotStyle = f => shade === "lots"
+    ? { fillColor: tok(lotClass(f.properties.lot_sqft).token), fillOpacity: 0.85, color: tok("--lot-line"), weight: 0.8, opacity: 1 }
+    : { fillColor: tok("--lot-line"), fillOpacity: 0, color: tok("--lot-line"), weight: 0.5, opacity: 0.75 };
+
+  const showLabels = () => {
+    zoneLabels.clearLayers();
+    if (shade !== "zoning") return;
+    const min = map.getZoom() < 14.75 ? 15 : 0;
+    for (const { zone, lon, lat, acres } of labelData) {
+      if (acres < min) continue;
+      L.marker([lat, lon], { pane: "zonelabels", interactive: false, keyboard: false,
+        icon: L.divIcon({ className: "zone-label", html: `<span>${esc(zone)}</span>`, iconSize: null }) }).addTo(zoneLabels);
+    }
+  };
+  map.on("zoomend", showLabels);
+
+  const legendZones = () => {
+    const el = document.getElementById("zone-legend");
+    if (!zoneLayer) return;
+    const feats = zoneLayer.toGeoJSON().features;
+    el.innerHTML = ZONE_GROUPS.map(g => {
+      const fs = feats.filter(f => f.properties.group === g.key);
+      if (!fs.length) return "";
+      const codes = fs.map(f => f.properties.zone).join(", ");
+      const acres = fs.reduce((s, f) => s + f.properties.acres_half_mile, 0);
+      return `<li><i class="sq" style="background:${tok(g.token)}"></i><span>${esc(g.label)} <span class="codes">${esc(codes)}</span></span><span class="n">${acresFmt(acres)} ac</span></li>`;
+    }).join("");
+  };
+  const legendLots = () => {
+    const el = document.getElementById("lot-legend");
     if (!lotLayer) return;
     const feats = lotLayer.toGeoJSON().features;
-    legend.innerHTML = LOTS.map(c => {
+    el.innerHTML = LOTS.map(c => {
       const n = feats.filter(f => lotClass(f.properties.lot_sqft) === c).length;
       return `<li><i class="sq" style="background:${tok(c.token)}"></i>${esc(c.label)}<span class="n">${n.toLocaleString("en-US")}</span></li>`;
     }).join("");
   };
+  const restyleShading = () => {
+    if (zoneLayer) zoneLayer.setStyle(zoneStyle);
+    if (lotLayer) lotLayer.setStyle(lotStyle);
+    legendZones();
+    legendLots();
+  };
+
+  const applyShade = () => {
+    const zoning = shade === "zoning", lots = shade === "lots";
+    if (zoneLayer) zoning ? zoneLayer.addTo(map) : zoneLayer.remove();
+    zoning ? zoneLabels.addTo(map) : zoneLabels.remove();
+    if (lotLayer) shade === "none" ? lotLayer.remove() : lotLayer.addTo(map);
+    for (const id of ["zone-legend", "zone-legend-note", "zone-note"]) document.getElementById(id).hidden = !zoning;
+    for (const id of ["lot-legend", "lot-note"]) document.getElementById(id).hidden = !lots;
+    restyleShading();
+    showLabels();
+  };
+  document.querySelectorAll('input[name="shade"]').forEach(r => r.addEventListener("change", e => {
+    if (e.target.checked) { shade = e.target.value; applyShade(); }
+  }));
+
   const lotPopup = p => `
     <div class="pop">
       <h4>TMK ${fmtTmk(p.tmk)}</h4>
@@ -952,11 +1047,36 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
       </dl>
       <p style="margin:8px 0 0"><a href="https://qpublic.schneidercorp.com/Application.aspx?AppID=1045&amp;PageTypeID=4&amp;KeyValue=${esc(p.tmk)}0000" target="_blank" rel="noopener">City property record ↗</a></p>
     </div>`;
-  document.getElementById("show-parcels").addEventListener("change", e => {
-    if (lotLayer) e.target.checked ? lotLayer.addTo(map) : lotLayer.remove();
-  });
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyleLots);
-  new MutationObserver(restyleLots).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  const zoneTip = p => `<strong>${esc(p.name)}</strong><br>${esc(zoneGroup(p.group).label)} · `
+    + `${acresFmt(p.acres_half_mile)} acres within ½ mile of a station`;
+  const lotTip = p => `<strong>${esc(p.zoning || "Zoning not mapped")}</strong><br>Lot ${Number(p.lot_sqft).toLocaleString("en-US")} sq ft · click for details`;
+
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyleShading);
+  new MutationObserver(restyleShading).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  (async () => {
+    const note = document.getElementById("zone-note");
+    try {
+      const res = await fetch("data/zoning/zoning_districts.geojson");
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const geo = await res.json();
+      zoneLayer = L.geoJSON(geo, { pane: "zoning", style: zoneStyle,
+        onEachFeature: (f, layer) => layer.bindTooltip(zoneTip(f.properties), { sticky: true, direction: "top", offset: [0, -8] }) });
+      for (const f of geo.features) for (const [lon, lat, acres] of f.properties.labels) labelData.push({ zone: f.properties.zone, lon, lat, acres });
+      applyShade();
+      const sum = (fs, k) => fs.reduce((s, f) => s + f.properties[k], 0);
+      const all = sum(geo.features, "acres_half_mile");
+      const pick = g => geo.features.filter(f => f.properties.group === g);
+      const res5 = sum(pick("residential"), "acres_half_mile"), mix = pick("mixed");
+      note.textContent = `Within ½ mile of the stations, ${Math.round(res5 / all * 100)}% of zoned land is residential `
+        + `and ${Math.round(sum(mix, "acres_half_mile") / all * 100)}% is mixed use. `
+        + `${Math.round(sum(mix, "acres_tod_special_district") / sum(mix, "acres_map") * 100)}% of the mixed-use land on the map is inside the TOD Special District.`;
+    } catch (err) {
+      note.hidden = false;
+      note.textContent = "The zoning data did not load. Reload the page to try again.";
+    }
+  })();
+
   (async () => {
     const note = document.getElementById("lot-note");
     try {
@@ -964,9 +1084,9 @@ button:focus-visible, a:focus-visible, .item:focus-visible, .toggle input:focus-
       if (!res.ok) throw new Error("HTTP " + res.status);
       const geo = await res.json();
       lotLayer = L.geoJSON(geo, { pane: "parcels", style: lotStyle,
-        onEachFeature: (f, layer) => layer.bindPopup(lotPopup(f.properties), { maxWidth: 300, autoPanPadding: [24, 24] }) });
-      if (document.getElementById("show-parcels").checked) lotLayer.addTo(map);
-      restyleLots();
+        onEachFeature: (f, layer) => layer.bindPopup(lotPopup(f.properties), { maxWidth: 300, autoPanPadding: [24, 24] })
+          .bindTooltip(lotTip(f.properties), { sticky: true, direction: "top", offset: [0, -8] }) });
+      applyShade();
       const sizes = geo.features.map(f => f.properties.lot_sqft).sort((a, b) => a - b);
       const sd = geo.features.filter(f => f.properties.tod_special_district);
       const sdSmall = sd.filter(f => f.properties.lot_sqft < 10000).length;

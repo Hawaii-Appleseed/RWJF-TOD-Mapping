@@ -1,6 +1,6 @@
 # Parcels in the Waipahu station areas
 
-Every land parcel in the station areas around the Hōʻaeʻae (West Loch) and Pouhala (Waipahu Transit Center) rail stations, with lot size and zoning. It is shown on the [RWJF TOD Mapping](https://hawaii-appleseed.github.io/RWJF-TOD-Mapping/) map, shaded by lot size. GitHub also draws `station_area_parcels.geojson` as a map when you open it.
+Every land parcel in the station areas around the Hōʻaeʻae (West Loch) and Pouhala (Waipahu Transit Center) rail stations, with lot size and zoning. It is shown on the [RWJF TOD Mapping](https://hawaii-appleseed.github.io/RWJF-TOD-Mapping/) map when "Shade the map by: Lot size" is selected, and as outlines over the zoning. GitHub also draws `station_area_parcels.geojson` as a map when you open it.
 
 ## What's included
 
